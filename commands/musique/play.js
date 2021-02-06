@@ -4,12 +4,16 @@ const DisTube = require('distube');
 module.exports.run = (client, message, args) => {
 
     const distube = new DisTube(client, { searchSongs: true, emitNewSongOnly: true });
-    
+
     try{
         if(!message.guild.voiceConnection)
             message.member.voice.channel.join();
-        distube.play(message, args.join(" "));
 
+        try{
+            distube.play(message, args.join(" "));
+        }catch{
+            message.reply("Tu dois me dire la chanson...");
+        }
         message.delete();
     }catch{
         message.reply("Tu dois être à une table pour que je te chante une chanson...");
