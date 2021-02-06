@@ -5,7 +5,12 @@ module.exports.run = (client, message, args) => {
 
     const distube = new DisTube(client, { searchSongs: true, emitNewSongOnly: true });
     
-    distube.stop(message);
+    try{
+        distube.play(message, 'https://youtu.be/gZ8gY0LXXnQ');
+    }
+    catch{
+        message.reply("Une erreur c'est produite...")
+    }
 
     message.delete();
     
