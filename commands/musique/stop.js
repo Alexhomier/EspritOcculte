@@ -13,7 +13,6 @@ module.exports.run = (client, message, args) => {
     }
 
     message.delete();
-    //https://youtu.be/gZ8gY0LXXnQ
 }
 
 module.exports.help = {

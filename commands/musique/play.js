@@ -1,8 +1,10 @@
 const Discord = require('discord.js');
 const DisTube = require('distube');
+const { MessageEmbed } = require("discord.js");
+const { PREFIX } = require('../../config');
+
 
 module.exports.run = (client, message, args) => {
-
     const distube = new DisTube(client, { searchSongs: true, emitNewSongOnly: true });
 
     try{
@@ -10,7 +12,18 @@ module.exports.run = (client, message, args) => {
             message.member.voice.channel.join();
 
         try{
+            const url = args.join(" ");
+
             distube.play(message, args.join(" "));
+            
+            const embed = new MessageEmbed()
+                .setTitle('Nouvelle chanson en cours!')
+                .setColor('#751aff')
+                .addField('Auteur', message.member.user.tag, true)
+                .addField('Chanson', url, true)
+                .addField('Commandes', `${PREFIX}play {URL}, ${PREFIX}stop`)
+                .setThumbnail(message.member.user.avatarURL())
+            message.channel.send(embed);
         }catch{
             message.reply("Tu dois me dire la chanson...");
         }
