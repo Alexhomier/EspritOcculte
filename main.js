@@ -91,8 +91,8 @@ client.on('message', (message) => {
                 .setTimestamp(),
             message.channel.send(client.embedPlay)
         ))
-        .on("error", (message) => {
-            message.channel.send("Tu ne me tueras jamais!");
+        .on("error", (message, err) => {
+            message.channel.send("Tu ne me tueras jamais!" + err);
         })
         .on("initQueue", (queue) => {
             queue.autoplay = false;

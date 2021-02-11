@@ -7,7 +7,6 @@ module.exports.run = (client, message, args) => {
     if(!message.member.voice.channel) return message.reply("Je ne peux pas chanter pour toi si tu n'est pas à une table...");
 
     let queue = client.distube.getQueue(message);
-    let list = [];
 
     if(queue){
         client.embed = new MessageEmbed()
