@@ -1,43 +1,28 @@
 const Discord = require('discord.js');
-const DisTube = require('distube');
-const { MessageEmbed } = require("discord.js");
+const distube = require('distube');
+
 const { PREFIX } = require('../../config');
 
-
 module.exports.run = (client, message, args) => {
-    const distube = new DisTube(client, { searchSongs: true, emitNewSongOnly: true });
+    if(!message.member.voice.channel) return message.reply("Je ne peux pas chanter pour toi si tu n'est pas à une table...");
 
-    try{
-        if(!message.guild.voiceConnection)
-            message.member.voice.channel.join();
 
-        try{
-            const url = args.join(" ");
+    if(!message.guild.voiceConnection)
+        message.member.voice.channel.join();
 
-            distube.play(message, args.join(" "));
-            
-            const embed = new MessageEmbed()
-                .setTitle('Nouvelle chanson en cours!')
-                .setColor('#751aff')
-                .addField('Auteur', message.member.user.tag, true)
-                .addField('Chanson', url, true)
-                .addField('Commandes', `${PREFIX}play {URL}, ${PREFIX}stop`)
-                .setThumbnail(message.member.user.avatarURL())
-            message.channel.send(embed);
-        }catch{
-            message.reply("Tu dois me dire la chanson...");
-        }
-        message.delete();
-    }catch{
-        message.reply("Tu dois être à une table pour que je te chante une chanson...");
-    }
+    if(!args.join(" ") == "")
+        client.distube.play(message, args.join(" "));
+    else
+        message.reply("Tu dois me dire la chanson...");
+
+    message.delete();
 }
 
 module.exports.help = {
     name: "play",
     aliases: ['play', 'jouer', 'p'],
-    description: "Joue l'URL demandé",
-    cooldown: 10,
+    description: "Joue la chanson demandé",
+    cooldown: 5,
     usage: '',
     permissions: false,
     isUserAdmin: false,

@@ -1,25 +1,31 @@
 const Discord = require('discord.js');
-const DisTube = require('distube');
+const distube = require('distube');
 
-module.exports.run = (client, message, args) => {
+const { PREFIX } = require('../../config');
 
-    const distube = new DisTube(client, { searchSongs: true, emitNewSongOnly: true });
-    
-    try{
-        distube.play(message, 'https://youtu.be/dRQaT1SYJek');
-    }
-    catch{
-        message.reply("Une erreur c'est produite...")
-    }
+module.exports.run = async (client, message, args) => {
+    if(!message.member.voice.channel) return message.channel.send('Vous devez être connecté à un salon vocal pour faire cette commande !')
 
-    message.delete();
+    let queue = await client.distube.getQueue(message);
+
+    if(queue) {
+        if(client.distube.isPlaying(message)){
+            client.distube.stop(message);
+            message.reply("Déjà la fin de la fête? Bon... ok on arrête tout...");
+        } else {
+            message.reply("Tu entends des sons qui n'existent pas, il n'y a aucune chanson en cours...");
+        }
+
+    } else if (!queue) {
+        message.reply("Tu entends des sons qui n'existent pas, il n'y a aucune chanson en cours...");
+    };
 }
 
 module.exports.help = {
     name: "stop",
-    aliases: ['stop', 'arret', 'arreter', 'arreté'],
-    description: "Arrête la musique du bot",
-    cooldown: 5,
+    aliases: ['stop', 'arret', 'arrêt'],
+    description: "Arrête la chanson en cours",
+    cooldown: 1,
     usage: '',
     permissions: false,
     isUserAdmin: false,
