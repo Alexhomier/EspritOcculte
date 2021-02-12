@@ -2,10 +2,14 @@ const { Client, Collection } = require('discord.js');
 const { MessageEmbed } = require("discord.js");
 const { TOKEN, PREFIX } = require('./config');
 const { readdirSync } = require("fs");
+const mongoose = require('moongoose');
 const DisTube = require('distube');
 
 const client = new Client();
+mongoose.connect('mongodb+srv://Alexhomier:Alexmongodb12@cluster0.hwos4.mongodb.net/data/warnsys&ssl=true', { useNewUrlParser: true, useUnifiedTopology: true })
+
 client.distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: false });
+
 
 //https://stackoverflow.com/questions/63513312/discord-js-v12-how-to-get-the-id-of-a-person-who-reacted-on-a-specific-message
 
@@ -74,47 +78,48 @@ client.on('message', (message) => {
     tStamps.set(message.author.id, timeNow);
     setTimeout(() => tStamps.delete(message.author.id), cdAmount);
 
-    client.distube
-        .on("playSong", (message, queue, song) => (
-            client.embedPlay = new MessageEmbed()
-                .setAuthor("𝕷'𝖊𝖘𝖕𝖗𝖎𝖙 𝖔𝖈𝖈𝖚𝖑𝖙𝖊", 'https://i.imgur.com/uAhHvYf.png')
-                .setTitle(`${song.name}`)
-                .setDescription('Musique en cours')
-                .setColor('#751aff')
-                .addFields(
-                    { name: 'Auteur', value: `${song.user}`, inline: true},
-                    { name: 'Durée', value: `${song.formattedDuration}`, inline: true },
-                    { name: 'Commandes', value: `${PREFIX}play {URL}, ${PREFIX}stop, ${PREFIX}skip`, inline: true },
-                    { name: 'URL', value: `${song.url}`, inline: true },
-                )
-                .setImage(`${song.thumbnail}`)
-                .setTimestamp(),
-            message.channel.send(client.embedPlay)
-        ))
-        /*.on("error", (message, err) => {
-            message.channel.send("Tu ne me tueras jamais!" + err);
-        })*/
-        .on("initQueue", (queue) => {
-            queue.autoplay = false;
-            queue.volume = 100;
-        })
-        .on("addSong", (message, queue, song) => (
-            client.embedAdd = new MessageEmbed()
-                .setTitle(`Musique ajouté à la liste`)
-                .setColor('#3333ff')
-                .addFields(
-                    { name: 'Ajouté par', value: `${song.user}`, inline: true},
-                    { name: 'Durée', value: `${song.formattedDuration}`, inline: true },
-                    { name: 'Commandes', value: `${PREFIX}play {URL}, ${PREFIX}stop, ${PREFIX}skip`, inline: true },
-                    { name: 'URL', value: `${song.url}`, inline: true },
-                )
-                .setImage(`${song.thumbnail}`)
-                .setTimestamp(),
-            message.channel.send(client.embedAdd)
-        ));
-
     command.run(client, message, args);
 });
+
+client.distube
+    .on("playSong", (message, queue, song) => (
+        client.embedPlay = new MessageEmbed()
+            .setAuthor("𝕷'𝖊𝖘𝖕𝖗𝖎𝖙 𝖔𝖈𝖈𝖚𝖑𝖙𝖊", 'https://i.imgur.com/uAhHvYf.png')
+            .setTitle(`${song.name}`)
+            .setDescription('Musique en cours')
+            .setColor('#751aff')
+            .addFields(
+                { name: 'Auteur', value: `${song.user}`, inline: true},
+                { name: 'Durée', value: `${song.formattedDuration}`, inline: true },
+                { name: 'Commandes', value: `${PREFIX}play {URL}, ${PREFIX}stop, ${PREFIX}skip`, inline: true },
+                { name: 'URL', value: `${song.url}`, inline: true },
+            )
+            .setImage(`${song.thumbnail}`)
+            .setTimestamp(),
+        message.channel.send(client.embedPlay)
+    ))
+    .on("error", (message, err) => {
+        message.channel.send("Tu ne me tueras jamais!" + err);
+    })
+    .on("initQueue", (queue) => {
+        queue.autoplay = false;
+        queue.volume = 50;
+    })
+    .on("addSong", (message, queue, song) => (
+        client.embedAdd = new MessageEmbed()
+            .setTitle(`Musique ajouté à la liste`)
+            .setColor('#3333ff')
+            .addFields(
+                { name: 'Ajouté par', value: `${song.user}`, inline: true},
+                { name: 'Durée', value: `${song.formattedDuration}`, inline: true },
+                { name: 'Commandes', value: `${PREFIX}play {URL}, ${PREFIX}stop, ${PREFIX}skip`, inline: true },
+                { name: 'URL', value: `${song.url}`, inline: true },
+            )
+            .setImage(`${song.thumbnail}`)
+            .setTimestamp(),
+        message.channel.send(client.embedAdd)
+     ));
+
 client.on('ready', () => { 
     console.log(`${client.user.tag} Online`);
     client.user.setActivity('tout ce que tu dis.', { type: 'LISTENING' })

@@ -18,10 +18,13 @@
   "homepage": "https://github.com/Alexhomier/EspritOcculte#readme",
   "dependencies": {
     "@discordjs/opus": "^0.4.0",
+    "@types/mongodb": "^3.6.7",
     "discord.js": "^12.5.1",
     "distube": "^2.8.8",
     "ffmpeg-static": "^4.2.7",
     "get-video-id": "^3.1.9",
+    "mongoose": "^5.11.15",
+    "moongoose": "^0.0.5",
     "node": "^15.8.0",
     "ytdl-core": "^4.4.5"
   }
