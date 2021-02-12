@@ -83,7 +83,7 @@ client.on('message', (message) => {
 
 client.distube
     .on("playSong", (message, queue, song) => (
-        client.embedAdd = null,
+        client.embedPlay = null,
         client.embedPlay = new MessageEmbed()
             .setAuthor("𝕷'𝖊𝖘𝖕𝖗𝖎𝖙 𝖔𝖈𝖈𝖚𝖑𝖙𝖊", 'https://i.imgur.com/uAhHvYf.png')
             .setTitle(`${song.name}`)
