@@ -20,6 +20,7 @@ module.exports.run = (client, message, args) => {
             .setColor('#03fc84')
             .setTimestamp(),
         message.channel.send(client.embed)
+        client.embed = null;
     } else {
         message.reply("Il n'y a aucune chanson ensuite...");
     }

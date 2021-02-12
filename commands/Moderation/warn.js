@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const Punishements = require('../../models/warnSys');
 
 module.exports.run = (client, message, args) => {
-    const user = message.mentions.members.first();
+/*    const user = message.mentions.members.first();
     const userID = user.id;
     const reason = args.splice(1).join(' ');
 
@@ -23,7 +23,7 @@ module.exports.run = (client, message, args) => {
         });
         data.save();
         message.reply("yes");
-    }else if(!data){*/
+    }else if(!data){
         let newData = new Punishements({
             GuildID: message.guild.id,
             UserID: userID,
@@ -38,7 +38,7 @@ module.exports.run = (client, message, args) => {
         message.reply("yes");
     //}
 
-    message.delete();
+    message.delete();*/
 };
 
 module.exports.help = {

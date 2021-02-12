@@ -83,6 +83,7 @@ client.on('message', (message) => {
 
 client.distube
     .on("playSong", (message, queue, song) => (
+        client.embedAdd = null,
         client.embedPlay = new MessageEmbed()
             .setAuthor("𝕷'𝖊𝖘𝖕𝖗𝖎𝖙 𝖔𝖈𝖈𝖚𝖑𝖙𝖊", 'https://i.imgur.com/uAhHvYf.png')
             .setTitle(`${song.name}`)
@@ -106,6 +107,7 @@ client.distube
         queue.volume = 50;
     })
     .on("addSong", (message, queue, song) => (
+        client.embedAdd = null,
         client.embedAdd = new MessageEmbed()
             .setTitle(`Musique ajouté à la liste`)
             .setColor('#3333ff')
