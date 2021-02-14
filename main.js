@@ -6,7 +6,7 @@ const mongoose = require('moongoose');
 const DisTube = require('distube');
 
 const client = new Client();
-mongoose.connect('mongodb+srv://Alexhomier:Alexmongodb12@cluster0.hwos4.mongodb.net/data/warnsys&ssl=true', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://Alexhomier:Alexmongodb12@cluster0.hwos4.mongodb.net/data', { useNewUrlParser: true, useUnifiedTopology: true })
 
 client.distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: false });
 

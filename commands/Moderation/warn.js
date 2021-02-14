@@ -1,8 +1,8 @@
 const { MessageEmbed } = require("discord.js");
-const Punishements = require('../../models/warnSys');
+const Punishements = require('../../models/warnSys.js');
 
 module.exports.run = (client, message, args) => {
-/*    const user = message.mentions.members.first();
+    const user = message.mentions.members.first();
     const userID = user.id;
     const reason = args.splice(1).join(' ');
 
@@ -15,7 +15,7 @@ module.exports.run = (client, message, args) => {
         UserID: userID
     });
 
-   /* if(data){
+    if(data){
         data.Punishements.unshift({
             PunishType: 'Warn',
             Moderator: message.author.id,
@@ -36,9 +36,9 @@ module.exports.run = (client, message, args) => {
         newData.save();
 
         message.reply("yes");
-    //}
+    }
 
-    message.delete();*/
+    message.delete();
 };
 
 module.exports.help = {
