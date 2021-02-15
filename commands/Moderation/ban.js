@@ -10,6 +10,8 @@ module.exports.run = (client, message, args) => {
 
     user ? banTrue() : message.reply("Votre sort d'exclusion n'a atteint personne.");
 
+    if(!reason) return message.reply("Vous devez mentionner une raison...");
+
     function banTrue() {
         const Embed = new MessageEmbed()
                 .setColor('#ff0000')

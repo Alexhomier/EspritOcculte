@@ -2,13 +2,14 @@ const { Client, Collection } = require('discord.js');
 const { MessageEmbed } = require("discord.js");
 const { TOKEN, PREFIX } = require('./config');
 const { readdirSync } = require("fs");
-const mongoose = require('moongoose');
 const DisTube = require('distube');
 
 const client = new Client();
-mongoose.connect('mongodb+srv://Alexhomier:Alexmongodb12@cluster0.hwos4.mongodb.net/data', { useNewUrlParser: true, useUnifiedTopology: true })
 
-client.distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: false });
+client.distube = new DisTube(client, {
+    searchSongs: false,
+    emitNewSongOnly: false 
+});
 
 
 //https://stackoverflow.com/questions/63513312/discord-js-v12-how-to-get-the-id-of-a-person-who-reacted-on-a-specific-message
@@ -30,15 +31,12 @@ loadCommands();
 
 client.on('guildMemberAdd', (member) =>{
     let channel = client.channels.cache.get('803338172317696000');
-
     channel.send(`Bienvenue dans la taverne ${member.user.tag}, prenez vos aises combattant!`);
-
-    member.send("Bonjour jeune âme!, je suis l'entité qui s'occupe de la sécurité de la Taverne");
+    member.send("Bonjour jeune âme! Je suis l'entité qui s'occupe de la sécurité de la Taverne, si tu as une question n'hésite pas à contacter un Tavernier!!");
 });
 
 client.on('guildMemberRemove', (member) =>{
     let channel = client.channels.cache.get('803338172317696000');
-
     channel.send(`Vous aussi vous trouvez que l'odeur de mort est disparu? C'est ${member.user.tag} qui est parti.`);
 });
 

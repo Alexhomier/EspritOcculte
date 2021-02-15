@@ -6,6 +6,8 @@ module.exports.run = (client, message, args) => {
 
     user ? kickTrue() : message.reply("Votre sort d'exclusion n'a atteint personne.");
 
+    if(!reason) return message.reply("Vous devez mentionner une raison...");
+
     function kickTrue() {
         const Embed = new MessageEmbed()
                 .setColor('#db930d')
