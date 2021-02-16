@@ -12,7 +12,7 @@ module.exports.run = (client, message, args) => {
         client.embed = new MessageEmbed()
 
         queue.songs.map((song, id) =>
-            client.embed.addFields({ name: `**${id+1}**. [${song.name}] - \`${song.formattedDuration}\``, value: `${song.url}`, inline: false }));
+            client.embed.addFields({ name: `> **${id+1}**. [${song.name}] - \`${song.formattedDuration}\``, value: `${song.url}`, inline: false }));
 
         client.embed
             .setAuthor("𝕷'𝖊𝖘𝖕𝖗𝖎𝖙 𝖔𝖈𝖈𝖚𝖑𝖙𝖊", 'https://i.imgur.com/uAhHvYf.png')

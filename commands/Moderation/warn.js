@@ -25,7 +25,7 @@ module.exports.run = (client, message, args) => {
         .setTitle('Avertissement \`@' + userName + '\`')
         .setDescription('@' + userName + ' a été averti pour \`' + reason + '\`, par ' + message.author.tag)
         .setTimestamp()
-    message.channel.send(EmbedLog);
+    channel.send(EmbedLog);
 }
 
 module.exports.help = {
