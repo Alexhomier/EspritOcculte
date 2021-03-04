@@ -1,18 +1,15 @@
-const { Client, Collection } = require('discord.js');
-const { MessageEmbed } = require("discord.js");
+const { Client, Collection, MessageEmbed } = require('discord.js');
 const { TOKEN, PREFIX } = require('./config');
 const { readdirSync } = require("fs");
 const DisTube = require('distube');
 
 const client = new Client();
+client.EmbedMusic = new MessageEmbed();
 
 client.distube = new DisTube(client, {
     searchSongs: false,
     emitNewSongOnly: false 
 });
-
-
-//https://stackoverflow.com/questions/63513312/discord-js-v12-how-to-get-the-id-of-a-person-who-reacted-on-a-specific-message
 
 ["commands", "cooldowns"].forEach(x => client[x] = new Collection());
 
@@ -30,9 +27,11 @@ const loadCommands = (dir = "./commands/") => {
 loadCommands();
 
 client.on('guildMemberAdd', (member) =>{
-    let channel = client.channels.cache.get('803338172317696000');
+    const channel = client.channels.cache.get('803338172317696000'); 
+
     channel.send(`Bienvenue dans la taverne ${member.user.tag}, prenez vos aises combattant!`);
     member.send("Bonjour jeune âme! Je suis l'entité qui s'occupe de la sécurité de la Taverne, si tu as une question n'hésite pas à contacter un Tavernier!!");
+    member.roles.add(client.role).catch(console.error);
 });
 
 client.on('guildMemberRemove', (member) =>{
@@ -79,6 +78,8 @@ client.on('message', (message) => {
     command.run(client, message, args);
 });
 
+
+
 client.distube
     .on("playSong", (message, queue, song) => (
         client.embedPlay = null,
@@ -120,8 +121,41 @@ client.distube
         message.channel.send(client.embedAdd)
      ));
 
+function CreateEmbedMusic() {
+    const channel = client.channels.cache.get('808392233102606346');
+    channel.bulkDelete(99);
+
+    client.EmbedMusic 
+        .setAuthor("𝕷'𝖊𝖘𝖕𝖗𝖎𝖙 𝖔𝖈𝖈𝖚𝖑𝖙𝖊", 'https://i.imgur.com/uAhHvYf.png')
+        .setDescription("Tapez le nom ou l'url de la chanson.")
+        .setColor('#3333ff')
+        .setImage('https://i.imgur.com/uAhHvYf.png')
+        .setTimestamp()
+    channel.send(client.EmbedMusic);
+
+    RemoveAddReact(client.EmbedMusic);
+}
+
+function RemoveAddReact(message) {
+    message.reactions.removeAll().catch(error => console.error('Impossible de supprimer les réactions: ', error));
+
+    client.EmbedMusic.react(':stop_button:')
+        .then(() => message.react(':track_previous:'))
+        .then(() => message.react(':play_pause:'))
+        .then(() => message.react(':track_next:'))
+        .then(() => message.react(':twisted_rightwards_arrows:'))
+        .then(() => message.react(':repeat_one:'))
+        .then(() => message.react(':repeat:'))
+        .then(() => message.react(':star:'))
+        .catch(() => channel.send("Une erreur s'est produite veuillez contacter un tavernier."));
+    
+}
+
 client.on('ready', () => { 
+    CreateEmbedMusic();
     console.log(`${client.user.tag} Online`);
-    client.user.setActivity('tout ce que tu dis.', { type: 'LISTENING' })
+    client.user.setActivity('tout ce que tu dis.', { type: 'LISTENING' });
+    client.myGuild = client.guilds.cache.get('802951727783346176');
+    client.role = client.myGuild.roles.cache.get("803335454866538506");
 });
 client.login(TOKEN);

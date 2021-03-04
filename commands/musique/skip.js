@@ -10,7 +10,7 @@ module.exports.run = (client, message, args) => {
     if(queue)
         client.distube.skip(message);
     else
-        message.reply("Il n'y a aucune autre chanson ensuite, tu peux en ajouter si tu veux...");
+        message.reply("Il n'y a aucune autre chanson en liste, tu peux en ajouter si tu veux...");
 
 }
 

@@ -11,6 +11,7 @@ module.exports.run = (client, message, args) => {
 
     if(!reason) return message.reply("Aucune raison defini");
 
+    message.delete();
     const EmbedAll = new MessageEmbed()
         .setColor('#e6cf22')
         .setTitle('Un sort divain a été utilisé!')
